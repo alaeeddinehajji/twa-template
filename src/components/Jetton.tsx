@@ -10,16 +10,18 @@ import {
 } from "./styled/styled";
 
 export function Jetton() {
-  const {connected, wallet} = useTonConnect()
-  const {jettonWalletAddress, balance, mint} = useJettonContract()
+  const { connected, wallet } = useTonConnect()
+  const { jettonWalletAddress, balance, mint } = useJettonContract()
 
   return (
     <Card title="Jetton">
       <FlexBoxCol>
-        <h3>Jetton</h3>
+        <h3>Testing Example for TON Payment</h3>
+
+        <b>Connect to the your Wallet and you can see your Balance and Wallet Address and Buy Subscription !</b>
         <FlexBoxRow>
           Wallet
-          <Ellipsis>{ wallet ? Address.parse(wallet as string).toString() : "Loading..."}</Ellipsis>
+          <Ellipsis>{wallet ? Address.parse(wallet as string).toString() : "Loading..."}</Ellipsis>
         </FlexBoxRow>
         <FlexBoxRow>
           Jetton Wallet
@@ -30,8 +32,12 @@ export function Jetton() {
           <div>{balance ?? "Loading..."}</div>
         </FlexBoxRow>
         <Button
-          disabled={!connected} onClick={mint}>
-          Mint jettons
+          disabled={!connected} >
+          Buy Subscription 1 TON Lifetime
+        </Button>
+        <Button
+          disabled={!connected} >
+          Buy Subscription 0.4 TON / Month
         </Button>
       </FlexBoxCol>
     </Card>
