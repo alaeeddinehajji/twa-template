@@ -1,6 +1,6 @@
-import { beginCell, toNano, Address, Cell, fromNano } from "ton";
+import { Address } from "ton-core";
+import { useJettonContract } from "../hooks/useJettonContract";
 import { useTonConnect } from "../hooks/useTonConnect";
-import { useFaucetJettonContract } from "../hooks/useFaucetJettonContract";
 import {
   Card,
   FlexBoxCol,
@@ -10,28 +10,28 @@ import {
 } from "./styled/styled";
 
 export function Jetton() {
-  const { connected } = useTonConnect();
-  const { mint, jettonWalletAddress, balance } = useFaucetJettonContract();
+  const {connected, wallet} = useTonConnect()
+  const {jettonWalletAddress, balance, mint} = useJettonContract()
 
   return (
     <Card title="Jetton">
       <FlexBoxCol>
-        <h3>Faucet Jetton</h3>
+        <h3>Jetton</h3>
         <FlexBoxRow>
           Wallet
-          <Ellipsis>{jettonWalletAddress}</Ellipsis>
+          <Ellipsis>{ wallet ? Address.parse(wallet as string).toString() : "Loading..."}</Ellipsis>
+        </FlexBoxRow>
+        <FlexBoxRow>
+          Jetton Wallet
+          <Ellipsis>{jettonWalletAddress ? jettonWalletAddress : "Loading..."}</Ellipsis>
         </FlexBoxRow>
         <FlexBoxRow>
           Balance
           <div>{balance ?? "Loading..."}</div>
         </FlexBoxRow>
         <Button
-          disabled={!connected}
-          onClick={async () => {
-            mint();
-          }}
-        >
-          Get jettons from faucet
+          disabled={!connected} onClick={mint}>
+          Mint jettons
         </Button>
       </FlexBoxCol>
     </Card>
